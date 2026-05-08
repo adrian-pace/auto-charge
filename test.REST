@@ -1,0 +1,47 @@
+### Login and extract token automatically using variables from .env
+# @name login
+POST https://api.easee.com/api/accounts/login
+Content-Type: application/json
+
+{
+    "userName": "{{$dotenv EASEE_EMAIL}}",
+    "password": "{{$dotenv EASEE_PASSWORD}}"
+}
+
+### Store the access token for subsequent requests
+@token = {{login.response.body.accessToken}}
+
+### Get All Chargers
+GET https://api.easee.com/api/chargers
+accept: application/json
+authorization: Bearer {{token}}
+
+### Get Account Profile
+GET https://api.easee.com/api/accounts/profile
+accept: application/json
+authorization: Bearer {{token}}
+
+### Get Specific Charger
+GET https://api.easee.com/api/chargers/{{$dotenv EASEE_CHARGER_ID}}
+accept: application/json
+authorization: Bearer {{token}}
+
+### Toggle Charging
+POST https://api.easee.com/api/chargers/{{$dotenv EASEE_CHARGER_ID}}/commands/toggle_charging
+accept: application/json
+authorization: Bearer {{token}}
+
+### Stop Charging
+POST https://api.easee.com/api/chargers/{{$dotenv EASEE_CHARGER_ID}}/commands/stop_charging
+accept: application/json
+authorization: Bearer {{token}}
+
+### Start Charging
+POST https://api.easee.com/api/chargers/{{$dotenv EASEE_CHARGER_ID}}/commands/start_charging
+accept: application/json
+authorization: Bearer {{token}}
+
+### Check State
+GET https://api.easee.com/api/chargers/{{$dotenv EASEE_CHARGER_ID}}/state
+accept: application/json
+authorization: Bearer {{token}}

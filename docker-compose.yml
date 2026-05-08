@@ -1,0 +1,17 @@
+services:
+  auto-charge:
+    build: .
+    container_name: auto-charge
+    restart: unless-stopped
+    env_file:
+      # As per your production server setup, point this to your secrets directory
+      # Adjust the path to where your global secrets folder actually is
+      - ../secrets/auto-charge.env
+    networks:
+      # Connects to the internal network Caddy is using
+      - caddy_net
+
+networks:
+  caddy_net:
+    # This assumes Caddy is running in another compose stack with this network
+    external: true
