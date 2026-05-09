@@ -1,6 +1,10 @@
+[build-system]
+requires = ["setuptools>=61", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "auto-charge"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
@@ -9,3 +13,5 @@ dependencies = [
     "httpx>=0.28.1",
     "pydantic-settings>=2.14.1",
 ]
+
+[tool.setuptools_scm]
